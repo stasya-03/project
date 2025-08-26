@@ -78,12 +78,25 @@ public class CreditAccountTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    // уменьшение баланса на сумму покупки
+    @Test
+    void shouldDecreaseBalanceOnPay() {
+        CreditAccount account = new CreditAccount(600, 1000, 15);
+
+        account.pay(200);
+
+        int expected = 400;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
     // невозможность уйти за пределы лимита
     @Test
     void shouldNotPayIfExceedsCreditLimit() {
         CreditAccount account = new CreditAccount(200, 500, 15);
 
-        boolean result = account.pay(800); // станет -600 → нельзя
+        boolean result = account.pay(800);
 
         assertFalse(result);
 
