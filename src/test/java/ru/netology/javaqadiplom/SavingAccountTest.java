@@ -18,4 +18,16 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(2_000 + 3_000, account.getBalance());
     }
+    @Test
+    public void shouldCalculateYearChangeCorrectly() {
+        SavingAccount account = new SavingAccount(150, 0, 1000, 10);
+
+        int expected = 15; // Ожидаемый результат: 150 * 10% = 15
+        int actual = account.yearChange();
+
+
+        Assertions.assertEquals(expected, actual);
+
+    }
+
 }
