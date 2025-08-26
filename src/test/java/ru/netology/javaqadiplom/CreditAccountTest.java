@@ -137,6 +137,42 @@ public class CreditAccountTest {
         Assertions.assertEquals(expected, actual);
     }
 
+
+    // тесты для yearChange
+    // 0 при положительном балансе
+    @Test
+    void shouldReturnZeroIfBalancePositive() {
+        CreditAccount account = new CreditAccount(1000, 5000, 15);
+
+        int expected = 0;
+        int actual = account.yearChange();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // корректные проценты при отрицательном балансе
+    @Test
+    void shouldReturnNegativeInterestIfBalanceNegative() {
+        CreditAccount account = new CreditAccount(0, 5000, 15);
+        account.pay(200); // баланс = -200
+
+        int expected = -30; // 200 * 15% = 30
+        int actual = account.yearChange();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // возвращает 0 при нулевом балансе
+    @Test
+    void shouldReturnZeroIfBalanceIsZero() {
+        CreditAccount account = new CreditAccount(0, 5000, 15);
+
+        int expected = 0;
+        int actual = account.yearChange();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
 
 
