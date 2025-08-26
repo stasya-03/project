@@ -48,6 +48,64 @@ public class CreditAccountTest {
 
         Assertions.assertEquals(expected, actual);
     }
+
+    
+    // тесты для PAY
+    // успешная оплата из положительного баланса
+    @Test
+    public void shouldPayIfEnoughBalance() {
+        CreditAccount account = new CreditAccount(500, 7000, 15);
+
+        boolean result = account.pay(100);
+
+        int expected = 400;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // успешная оплата с использованием кредита в пределах лимита
+    @Test
+    void shouldPayUsingCreditIfWithinLimit() {
+        CreditAccount account = new CreditAccount(200, 500, 15);
+
+        boolean result = account.pay(600);
+
+        assertTrue(result);
+        int expected = -400;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // невозможность уйти за пределы лимита
+    @Test
+    void shouldNotPayIfExceedsCreditLimit() {
+        CreditAccount account = new CreditAccount(200, 500, 15);
+
+        boolean result = account.pay(800); // станет -600 → нельзя
+
+        assertFalse(result);
+
+        int expected = 200;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    //отказ при нуле или отрицательной сумме
+    @Test
+    void shouldNotPayIfAmountIsZeroOrNegative() {
+        CreditAccount account = new CreditAccount(1000, 5000, 15);
+
+        assertFalse(account.pay(0));
+        assertFalse(account.pay(-100));
+
+        int expected = 1000;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
 }
 
 
