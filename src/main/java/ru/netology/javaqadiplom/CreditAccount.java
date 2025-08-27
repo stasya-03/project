@@ -68,7 +68,7 @@ public class CreditAccount extends Account {
         if (amount <= 0) {
             return false;
         }
-        balance = amount;
+        balance += amount;  // Исправлено: добавляем сумму к текущему балансу
         return true;
     }
 
