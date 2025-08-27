@@ -18,4 +18,37 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(2_000 + 3_000, account.getBalance());
     }
+    @Test
+    public void shouldCalculateYearChangeCorrectly() {
+        SavingAccount account = new SavingAccount(150, 0, 1000, 10);
+
+        int expected = 15; // Ожидаемый результат: 150 * 10% = 15
+        int actual = account.yearChange();
+
+
+        Assertions.assertEquals(expected, actual);
+
+    }
+    @Test
+    public void testPayWhenBalanceWouldBecomeLessThanMinBalance() {
+        int initialBalance = 5000;
+        int minBalance = 1000;
+        int maxBalance = 10000;
+        int rate = 10;
+
+        SavingAccount account = new SavingAccount(initialBalance, minBalance, maxBalance, rate);
+
+        // Пытаемся списать сумму, которая приведёт к балансу ниже минимального
+        int paymentAmount = 4500; // После списания баланс станет 500, что < minBalance (1000)
+
+        // Операция должна завершиться неудачей и не менять баланс
+        boolean result = account.pay(paymentAmount);
+
+        // Проверяем, что операция возвращает false
+        Assertions.assertFalse(result);
+
+        // Проверяем, что баланс НЕ изменился (дефект: в текущей реализации баланс изменится)
+        Assertions.assertEquals(initialBalance, account.getBalance());
+    }
+
 }
