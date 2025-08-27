@@ -41,13 +41,15 @@ public class CreditAccount extends Account {
         if (amount <= 0) {
             return false;
         }
-        balance = balance - amount;
-        if (balance > -creditLimit) {
-            balance = -amount;
-            return true;
-        } else {
-            return false;
+
+        // Проверяем, не превысит ли платеж кредитный лимит
+        if (balance - amount < -creditLimit) {
+            return false; // Нельзя совершить платеж, превышающий лимит
         }
+
+        // Если все проверки пройдены, совершаем платеж
+        balance -= amount;
+        return true;
     }
 
     /**
