@@ -82,7 +82,11 @@ public class CreditAccount extends Account {
      */
     @Override
     public int yearChange() {
-        return balance / 100 * rate;
+        if (balance >= 0) {
+            return 0; // Для положительного баланса проценты не начисляются
+        }
+        // Для отрицательного баланса рассчитываем проценты
+        return balance * rate / 100;
     }
 
     public int getCreditLimit() {
