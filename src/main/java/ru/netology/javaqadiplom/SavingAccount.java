@@ -61,8 +61,9 @@ public class SavingAccount extends Account {
         if (amount <= 0) {
             return false;
         }
-        balance = balance - amount;
-        if (balance > minBalance) {
+        int newBalance = balance - amount;
+        if (newBalance >= minBalance) {
+            balance = newBalance;
             return true;
         } else {
             return false;
