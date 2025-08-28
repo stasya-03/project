@@ -12,14 +12,31 @@ public class CreditAccount extends Account {
      * Создаёт новый объект кредитного счёта с заданными параметрами.
      * Если параметры некорректны (кредитный лимит отрицательный и так далее), то
      * должно выкидываться исключения вида IllegalArgumentException.
+     *
      * @param initialBalance - неотрицательное число, начальный баланс для счёта
-     * @param creditLimit - неотрицательное число, максимальная сумма которую можно задолжать банку
-     * @param rate - неотрицательное число, ставка кредитования для расчёта долга за отрицательный баланс
+     * @param creditLimit    - неотрицательное число, максимальная сумма которую можно задолжать банку
+     * @param rate           - неотрицательное число, ставка кредитования для расчёта долга за отрицательный баланс
      */
     public CreditAccount(int initialBalance, int creditLimit, int rate) {
         if (rate < 0) {
             throw new IllegalArgumentException(
                     "Накопительная ставка не может быть отрицательной, а у вас: " + rate
+            );
+        }
+        if (initialBalance < 0) {
+            throw new IllegalArgumentException(
+                    "Начальный баланс не может быть отрицательным, а у вас: " + initialBalance
+            );
+        }
+        if (creditLimit < 0) {
+            throw new IllegalArgumentException(
+                    "Кредитный лимит не может быть отрицательным, а у вас: " + creditLimit
+            );
+        }
+        if (initialBalance > creditLimit) {
+            throw new IllegalArgumentException(
+                    "Начальный баланс не может превышать кредитный лимит, а у вас: " +
+                            "balance = " + initialBalance + ", limit = " + creditLimit
             );
         }
         this.balance = initialBalance;
