@@ -37,6 +37,13 @@ public class CreditAccountTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new CreditAccount(300, 7000, -15));
     }
 
+    @Test
+    public void shouldThrowExceptionIfInitialBalanceExceedsCreditLimit() {
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                new CreditAccount(8000, 7000, 15));
+    }
+
+
     // нулевая ставка
     @Test
     public void shouldTakeZeroRate() {
@@ -61,16 +68,6 @@ public class CreditAccountTest {
     }
 
     // проверка конструктора при граничном значении лимита 0
-    @Test
-    public void shouldCreateAccountWithZeroCreditLimit() {
-        CreditAccount account = new CreditAccount(500, 0, 15);
-
-        int expected = 0;
-        int actual = account.getCreditLimit();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
 
     // тесты для PAY
     // успешная оплата из положительного баланса
