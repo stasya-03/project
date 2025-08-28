@@ -49,6 +49,28 @@ public class CreditAccountTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    // проверка конструктора при гарничном значении баланса 0
+    @Test
+    public void shouldCreateAccountWithZeroBalance() {
+        CreditAccount account = new CreditAccount(0, 5000, 15);
+
+        int expected = 0;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // проверка конструктора при граничном значении лимита 0
+    @Test
+    public void shouldCreateAccountWithZeroCreditLimit() {
+        CreditAccount account = new CreditAccount(500, 0, 15);
+
+        int expected = 0;
+        int actual = account.getCreditLimit();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 
     // тесты для PAY
     // успешная оплата из положительного баланса
@@ -86,6 +108,20 @@ public class CreditAccountTest {
         account.pay(200);
 
         int expected = 400;
+        int actual = account.getBalance();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    //полное использоване лимита
+    @Test
+    public void shouldAllowPayUntilExactCreditLimit() {
+        CreditAccount account = new CreditAccount(200, 500, 15);
+
+        boolean result = account.pay(700);
+
+        assertTrue(result);
+        int expected = -500;
         int actual = account.getBalance();
 
         Assertions.assertEquals(expected, actual);
@@ -179,6 +215,18 @@ public class CreditAccountTest {
     @Test
     void shouldReturnZeroIfBalanceIsZero() {
         CreditAccount account = new CreditAccount(0, 5000, 15);
+
+        int expected = 0;
+        int actual = account.yearChange();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    //минимальный отрицательный баланс
+    @Test
+    public void shouldReturnZeroIfBalanceIsMinusOne() {
+        CreditAccount account = new CreditAccount(0, 5000, 15);
+        account.pay(1); // баланс = -1
 
         int expected = 0;
         int actual = account.yearChange();
