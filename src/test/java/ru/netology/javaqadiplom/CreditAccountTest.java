@@ -63,7 +63,7 @@ public class CreditAccountTest {
     // проверка конструктора при граничном значении лимита 0
     @Test
     public void shouldCreateAccountWithZeroCreditLimit() {
-        CreditAccount account = new CreditAccount(500, 0, 15);
+        CreditAccount account = new CreditAccount(0, 0, 15);
 
         int expected = 0;
         int actual = account.getCreditLimit();
@@ -205,7 +205,7 @@ public class CreditAccountTest {
         CreditAccount account = new CreditAccount(0, 5000, 15);
         account.pay(200); // баланс = -200
 
-        int expected = -30; // 200 * 15% = 30
+        int expected = -30; 
         int actual = account.yearChange();
 
         Assertions.assertEquals(expected, actual);
