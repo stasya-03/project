@@ -39,15 +39,15 @@ public class SavingAccountTest {
         SavingAccount account = new SavingAccount(initialBalance, minBalance, maxBalance, rate);
 
         // Пытаемся списать сумму, которая приведёт к балансу ниже минимального
-        int paymentAmount = 4500; // После списания баланс станет 500, что < minBalance (1000)
+        int paymentAmount = 4500;
 
-        // Операция должна завершиться неудачей и не менять баланс
+
         boolean result = account.pay(paymentAmount);
 
         // Проверяем, что операция возвращает false
         Assertions.assertFalse(result);
 
-        // Проверяем, что баланс НЕ изменился (дефект: в текущей реализации баланс изменится)
+        // Проверяем, что баланс НЕ изменился
         Assertions.assertEquals(initialBalance, account.getBalance());
     }
 
